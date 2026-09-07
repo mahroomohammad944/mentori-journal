@@ -15,9 +15,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Restore Mentori app
+      - name: Verify Mentori app
         shell: powershell
-        run: ./tools/restore-app.ps1
+        run: |
+          if (-not (Test-Path "app/mentori-journal.html")) {
+            throw "app/mentori-journal.html is missing. Upload the current Mentori HTML file to that path, then run this workflow again."
+          }
 
       - name: Install Inno Setup 6
         shell: powershell
