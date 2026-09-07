@@ -4,14 +4,18 @@
 
 ## ساخت Installer با Inno Setup 6
 
-این Repository شامل سورس برنامه به‌صورت payload فشرده، Launcher ویندوز، فایل Inno Setup و GitHub Actions است.
+Repository شامل Launcher ویندوز، فایل Inno Setup 6 و GitHub Actions برای ساخت `Setup.exe` است.
 
-### ساخت خودکار در GitHub
-هر Push روی `main` Workflow ویندوز را اجرا می‌کند و خروجی `Mentori-Journal-Setup-v14.14.exe` را به‌صورت Artifact می‌سازد.
+### یک مرحله باقی‌مانده
+فایل فعلی برنامه را با نام دقیق زیر در Repository قرار دهید:
+
+`app/mentori-journal.html`
+
+بعد از قرار گرفتن فایل، Workflow با هر Push روی `main` اجرا می‌شود و `Mentori-Journal-Setup-v14.14.exe` را به‌صورت Artifact می‌سازد.
 
 ### ساخت محلی
 1. Inno Setup 6 را نصب کنید.
-2. ابتدا payload را با اسکریپت `tools/restore-app.ps1` بازسازی کنید.
-3. فایل `installer/Mentori-Journal.iss` را با Inno Setup 6 کامپایل کنید.
+2. مطمئن شوید `app/mentori-journal.html` وجود دارد.
+3. `installer/Mentori-Journal.iss` را Compile کنید.
 
 > داده‌های برنامه محلی هستند و Cloud Sync هنوز در این نسخه فعال نیست.
