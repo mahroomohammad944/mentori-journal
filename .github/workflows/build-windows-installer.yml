@@ -1,0 +1,35 @@
+name: Build Windows Installer
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Restore Mentori app
+        shell: powershell
+        run: ./tools/restore-app.ps1
+
+      - name: Install Inno Setup 6
+        shell: powershell
+        run: choco install innosetup --no-progress -y
+
+      - name: Build Setup EXE
+        shell: powershell
+        run: '& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "installer\Mentori-Journal.iss"'
+
+      - name: Upload Setup EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mentori-Journal-Setup-v14.14
+          path: installer/output/Mentori-Journal-Setup-v14.14.exe
+          if-no-files-found: error
